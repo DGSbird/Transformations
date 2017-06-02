@@ -12,6 +12,8 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>ecb.transformations.treeStructure.TComponent</class>
 		<class>ecb.transformations.treeStructure.TNode</class>
+		<class>ecb.transformations.informationModel.TScheme</class>
+		<class>ecb.transformations.abstractClasses.Component</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url"
