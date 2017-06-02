@@ -1,8 +1,6 @@
 package ecb.transformations.treeStructure;
 
 import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +9,7 @@ import javax.persistence.OneToOne;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import ecb.transformations.interfaces.components.Similar;
-import ecb.transformations.interfaces.components.WebComponent;
+import ecb.transformations.abstractClasses.Component;
 
 /**
  * Stand alone transformation component without consideration of the tree / node
@@ -28,7 +25,7 @@ import ecb.transformations.interfaces.components.WebComponent;
  */
 @Entity
 @SuppressWarnings("rawtypes")
-public class TComponent implements Similar, WebComponent, Serializable {
+public class TComponent extends Component implements Serializable {
     // ----------------------------------------------------------
     // fields
     // ----------------------------------------------------------
@@ -41,42 +38,6 @@ public class TComponent implements Similar, WebComponent, Serializable {
     @Id
     @Column(name = "componentId", nullable = false)
     private int componentId;
-
-    /**
-     * The expression of this {@link TComponent} (e.g. result)
-     */
-    @Column(name = "expression", length = 100000)
-    private String expression;
-
-    /**
-     * The type of this {@link TComponent} (e.g. CUBE_ID)
-     */
-    @Column(name = "type")
-    private String type;
-
-    /**
-     * The comment related to this {@link TComponent}
-     */
-    @Column(name = "comment", length = 100000)
-    private String comment = "";
-
-    /**
-     * The {@link URL} related to this {@link TComponent}
-     */
-    @Column(name = "uniformResourceLocation")
-    private URL uniformResourceLocation;
-
-    /**
-     * The tool tip related to this {@link TComponent}
-     */
-    @Column(name = "tooltip")
-    private String tooltip = "";
-
-    /**
-     * The description related to this {@link TComponent}
-     */
-    @Column(name = "description", length = 100000)
-    private String description;
 
     /**
      * The {@link TNode} related to this {@link TComponent}
@@ -122,12 +83,11 @@ public class TComponent implements Similar, WebComponent, Serializable {
     }
 
     public TComponent(String expression) {
-	setExpression(expression);
+	super(expression);
     }
 
     public TComponent(String expression, String type) {
-	setExpression(expression);
-	setType(type);
+	super(expression, type);
     }
 
     public TComponent(String expression, String type, String comment) {
@@ -156,8 +116,8 @@ public class TComponent implements Similar, WebComponent, Serializable {
     }
 
     @Override
-    public URL getUniformResourceLocation() {
-	return uniformResourceLocation;
+    public String getLocation() {
+	return location;
     }
 
     @Override
@@ -198,28 +158,8 @@ public class TComponent implements Similar, WebComponent, Serializable {
 	this.type = type;
     }
 
-    public void setUniformResourceLocation(URL uniformResourceLocation) {
-	this.uniformResourceLocation = uniformResourceLocation;
-    }
-
-    /**
-     * Allows to set the {@link URL} of this {@link TComponent} using the string
-     * representation of the URL. This method throws a
-     * <tt>MalformedURLException</tt>.
-     * 
-     * @param uniformResourceLocator
-     *            the {@link String} representation of the Uniform Resource
-     *            Locator
-     * @exception MalformedURLException
-     *                if the given input does not comply with the Uniform
-     *                Resource Locator syntax
-     */
-    public void setUniformResourceLocation(String uniformResourceLocation) {
-	try {
-	    this.uniformResourceLocation = new URL(uniformResourceLocation);
-	} catch (MalformedURLException e) {
-	    e.printStackTrace();
-	}
+    public void setLocation(String location) {
+	this.location = location;
     }
 
     public void setDescription(String description) {
