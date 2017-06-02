@@ -10,6 +10,7 @@ import java.io.Serializable;
  *
  */
 public interface Component extends Serializable {
+
     /**
      * 
      * @return the expression of this component (e.g. ":=")
@@ -20,11 +21,17 @@ public interface Component extends Serializable {
      * 
      * @return the type of this component
      */
-    public TypeOfNode getType();
+    public String getType();
 
     /**
      * 
      * @return the comment related to this component
      */
     public String getComment();
+
+    /**
+     * 
+     * @return the description related to this component
+     */
+    public String getDescription();
 }
