@@ -97,40 +97,6 @@ public class TComponent extends Component implements Serializable {
     }
 
     // ----------------------------------------------------------
-    // inherited methods (from interface)
-    // ----------------------------------------------------------
-
-    @Override
-    public String getExpression() {
-	return expression;
-    }
-
-    @Override
-    public String getType() {
-	return type;
-    }
-
-    @Override
-    public String getComment() {
-	return comment;
-    }
-
-    @Override
-    public String getLocation() {
-	return location;
-    }
-
-    @Override
-    public String getTooltip() {
-	return tooltip;
-    }
-
-    @Override
-    public String getDescription() {
-	return description;
-    }
-
-    // ----------------------------------------------------------
     // additional methods
     // ----------------------------------------------------------
 
@@ -140,30 +106,6 @@ public class TComponent extends Component implements Serializable {
 
     public void setComponentId(int componentId) {
 	this.componentId = componentId;
-    }
-
-    public void setTooltip(String tooltip) {
-	this.tooltip = tooltip;
-    }
-
-    public void setExpression(String expression) {
-	this.expression = expression;
-    }
-
-    public void setComment(String comment) {
-	this.comment = comment;
-    }
-
-    public void setType(String type) {
-	this.type = type;
-    }
-
-    public void setLocation(String location) {
-	this.location = location;
-    }
-
-    public void setDescription(String description) {
-	this.description = description;
     }
 
     public TNode getNode() {
