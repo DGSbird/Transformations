@@ -65,13 +65,13 @@ public class TNode<T extends TNode, S extends Similar & WebComponent> implements
      * The parent of this {@link TNode}
      */
     @ManyToOne
-    private TNode parent;
+    private T parent;
 
     /**
      * The children of this {@link TNode}
      */
     @OneToMany
-    private List<TNode> children;
+    private List<T> children;
 
     /**
      * The VLT code of this {@link TNode} (already taken into consideration the
@@ -308,25 +308,29 @@ public class TNode<T extends TNode, S extends Similar & WebComponent> implements
 
     @Override
     public T getParent() {
-	return (T) parent;
+	return parent;
     }
 
     @Override
     public void setParent(T parent, boolean set) {
-	this.parent = (TNode) parent;
+	this.parent = parent;
 	if (parent != null && set) {
 	    parent.addChild(this, false);
 	}
+
     }
 
     @Override
     public List<T> getChildren() {
-	return (List<T>) children;
+	if (children == null) {
+	    children = new ArrayList<>();
+	}
+	return children;
     }
 
     @Override
     public void setChildren(List<T> children, boolean set) {
-	this.children = (List<TNode>) children;
+	this.children = children;
 	if (children != null && set) {
 	    Iterator<T> it = children.iterator();
 	    while (it.hasNext()) {
@@ -334,6 +338,7 @@ public class TNode<T extends TNode, S extends Similar & WebComponent> implements
 		child.setParent(this, false);
 	    }
 	}
+
     }
 
     @Override
@@ -361,6 +366,7 @@ public class TNode<T extends TNode, S extends Similar & WebComponent> implements
 		child.setParent(null);
 	    }
 	}
+
     }
 
     // ----------------------------------------------------------
@@ -392,5 +398,4 @@ public class TNode<T extends TNode, S extends Similar & WebComponent> implements
     public String toString() {
 	return getData().toString();
     }
-
 }
