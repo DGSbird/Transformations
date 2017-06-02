@@ -1,9 +1,8 @@
 package ecb.codeBuilder.interfaces;
 
 import ecb.generalObjects.representation.enums.Representation;
-import ecb.transformations.interfaces.components.Similar;
-import ecb.transformations.interfaces.components.WebComponent;
 import ecb.transformations.interfaces.nodes.TypeOfNode;
+import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 
 /**
@@ -21,7 +20,7 @@ public interface GenerateCode {
      * @return a {@link String} object that comprises the code related to the
      *         given node
      */
-    public <T extends TNode<T, S>, S extends Similar & WebComponent> String generateCode(T node, Representation representation);
+    public <T extends TNode<T, S>, S extends TComponent> String generateCode(T node, Representation representation);
 
     /**
      * Sets the type of node.
