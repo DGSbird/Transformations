@@ -14,6 +14,7 @@
 		<class>ecb.transformations.treeStructure.TNode</class>
 		<class>ecb.transformations.informationModel.TScheme</class>
 		<class>ecb.transformations.abstractClasses.Component</class>
+		<class>ecb.transformations.informationModel.Transformation</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url"
