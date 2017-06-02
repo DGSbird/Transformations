@@ -4,7 +4,7 @@ public enum Bracket {
     NONE("", ""),
     ROUND("(", ")"),
     SQUARE("[", "]"),
-    CURLE("{", "}");
+    CURLED("{", "}");
 
     String left;
 
