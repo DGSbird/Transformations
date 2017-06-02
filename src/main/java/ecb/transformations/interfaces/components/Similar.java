@@ -10,5 +10,11 @@ package ecb.transformations.interfaces.components;
  *
  */
 public interface Similar {
+    /**
+     * 
+     * @param obj
+     *            an {@link Object}
+     * @return true iff the input is "similar" to this object
+     */
     public boolean isSimilar(Object obj);
 }
