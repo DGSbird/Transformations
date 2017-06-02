@@ -85,7 +85,6 @@ public class TScheme<T extends TNode<T, S>, S extends TComponent> extends TNode<
 
     public TScheme(TComponent component) {
 	super(component);
-	setComponent(component, false);
     }
 
     // ----------------------------------------------------------
