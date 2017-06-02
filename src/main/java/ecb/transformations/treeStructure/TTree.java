@@ -23,7 +23,7 @@ import ecb.transformations.interfaces.components.WebComponent;
  *            type implementing {@link Similar} and {@link WebComponent}
  *            interfaces
  */
-public class TTree<T extends TNode<T, S>, S extends Similar & WebComponent> implements Tree<T, S> {
+public class TTree<T extends TNode<T, S>, S extends TComponent> implements Tree<T, S> {
     // ----------------------------------------------------------
     // fields
     // ----------------------------------------------------------
