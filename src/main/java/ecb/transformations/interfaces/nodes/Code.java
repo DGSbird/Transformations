@@ -1,4 +1,4 @@
-package ecb.transformations.interfaces;
+package ecb.transformations.interfaces.nodes;
 
 import ecb.generalObjects.languages.enums.Syntax;
 import ecb.generalObjects.representation.enums.Representation;

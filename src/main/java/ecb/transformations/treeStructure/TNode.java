@@ -21,10 +21,10 @@ import ecb.generalObjects.languages.enums.Syntax;
 import ecb.generalObjects.representation.enums.Representation;
 import ecb.generalObjects.treeStructure.interfaces.Node;
 import ecb.transformations.functions.Functions;
-import ecb.transformations.interfaces.Code;
-import ecb.transformations.interfaces.Similar;
-import ecb.transformations.interfaces.TypeOfNode;
-import ecb.transformations.interfaces.WebComponent;
+import ecb.transformations.interfaces.components.Similar;
+import ecb.transformations.interfaces.components.WebComponent;
+import ecb.transformations.interfaces.nodes.Code;
+import ecb.transformations.interfaces.nodes.TypeOfNode;
 import ecb.transformations.metadata.TContext;
 
 /**

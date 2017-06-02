@@ -1,9 +1,9 @@
 package ecb.codeBuilder.interfaces;
 
 import ecb.generalObjects.representation.enums.Representation;
-import ecb.transformations.interfaces.Similar;
-import ecb.transformations.interfaces.TypeOfNode;
-import ecb.transformations.interfaces.WebComponent;
+import ecb.transformations.interfaces.components.Similar;
+import ecb.transformations.interfaces.components.WebComponent;
+import ecb.transformations.interfaces.nodes.TypeOfNode;
 import ecb.transformations.treeStructure.TNode;
 
 /**

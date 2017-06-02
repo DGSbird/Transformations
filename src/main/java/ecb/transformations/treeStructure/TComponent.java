@@ -11,8 +11,8 @@ import javax.persistence.OneToOne;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import ecb.transformations.interfaces.Similar;
-import ecb.transformations.interfaces.WebComponent;
+import ecb.transformations.interfaces.components.Similar;
+import ecb.transformations.interfaces.components.WebComponent;
 
 /**
  * Stand alone transformation component without consideration of the tree / node

@@ -5,10 +5,10 @@ import ecb.codeBuilder.interfaces.GenerateCode;
 import ecb.generalObjects.languages.enums.Syntax;
 import ecb.generalObjects.representation.enums.Representation;
 import ecb.transformations.enums.Bracket;
-import ecb.transformations.interfaces.TypeOfNode;
-import ecb.transformations.interfaces.Build;
-import ecb.transformations.interfaces.Similar;
-import ecb.transformations.interfaces.WebComponent;
+import ecb.transformations.interfaces.components.Similar;
+import ecb.transformations.interfaces.components.WebComponent;
+import ecb.transformations.interfaces.nodes.Build;
+import ecb.transformations.interfaces.nodes.TypeOfNode;
 import ecb.transformations.treeStructure.TNode;
 
 public enum OpsWithTwoOperands implements TypeOfNode, Build {

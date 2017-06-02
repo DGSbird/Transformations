@@ -3,7 +3,7 @@ package ecb.transformations.metadata;
 import java.util.ArrayList;
 import java.util.List;
 
-import ecb.transformations.interfaces.TypeOfNode;
+import ecb.transformations.interfaces.nodes.TypeOfNode;
 import ecb.transformations.operators.enums.InvisibleOps;
 import ecb.transformations.operators.enums.OpsWithTwoOperands;
 

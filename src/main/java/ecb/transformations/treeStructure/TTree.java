@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ecb.generalObjects.treeStructure.interfaces.Tree;
-import ecb.transformations.interfaces.Similar;
-import ecb.transformations.interfaces.WebComponent;
+import ecb.transformations.interfaces.components.Similar;
+import ecb.transformations.interfaces.components.WebComponent;
 
 /**
  * Implementation of the {@link Tree} interface in order to provide a
