@@ -1,12 +1,17 @@
 package ecb.transformations.operators.enums;
 
-import ecb.transformations.BirdVtl.TNode;
+import ecb.codeBuilder.VtlBuilder;
+import ecb.codeBuilder.interfaces.GenerateCode;
+import ecb.generalObjects.languages.enums.Syntax;
+import ecb.generalObjects.representation.enums.Representation;
 import ecb.transformations.enums.Bracket;
 import ecb.transformations.interfaces.TypeOfNode;
-import ecb.transformations.interfaces.VtlBuild;
+import ecb.transformations.interfaces.Build;
+import ecb.transformations.interfaces.Similar;
 import ecb.transformations.interfaces.WebComponent;
+import ecb.transformations.treeStructure.TNode;
 
-public enum OpsWithTwoOperands implements TypeOfNode, VtlBuild {
+public enum OpsWithTwoOperands implements TypeOfNode, Build {
     // ----------------------------------------------------------
     // components
     // ----------------------------------------------------------
@@ -83,15 +88,19 @@ public enum OpsWithTwoOperands implements TypeOfNode, VtlBuild {
     }
 
     @Override
-    public <T extends TNode<T, S>, S extends WebComponent> String buildVtlCode(T node, boolean htmlConfig) {
+    public <T extends TNode<T, S>, S extends Similar & WebComponent> String buildCode(T node, Syntax syntax,
+	    Representation representation) {
+	// TODO: extend this method when adding additional syntax or
+	// representation
 	String rString = new String();
-	try {
-	    T child0 = (T) node.getChildAt(0);
-	    T child1 = (T) node.getChildAt(1);
-
-	} catch (Exception e) {
-	    e.printStackTrace();
+	GenerateCode builder = null;
+	if (syntax.equals(Syntax.VTL)) {
+	    builder = new VtlBuilder();
+	} else {
+	    // TODO: implement SQL syntax generation
 	}
+	builder.setTypeOfNode(this);
+	rString = builder.generateCode(node, representation);
 	return rString;
     }
 
