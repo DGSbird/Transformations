@@ -1,4 +1,4 @@
-package ecb.transformations.BirdVtl;
+package ecb.transformations.treeStructure;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,10 +10,22 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import ecb.generalObjects.treeStructure.abstractClasses.AbstractNode;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import ecb.generalObjects.languages.enums.Syntax;
+import ecb.generalObjects.representation.enums.Representation;
+import ecb.generalObjects.treeStructure.interfaces.Node;
 import ecb.transformations.functions.Functions;
+import ecb.transformations.interfaces.Code;
+import ecb.transformations.interfaces.Similar;
 import ecb.transformations.interfaces.TypeOfNode;
 import ecb.transformations.interfaces.WebComponent;
+import ecb.transformations.metadata.TContext;
 
 /**
  * Transformation node class representing nodes of a transformation. The data
@@ -27,13 +39,75 @@ import ecb.transformations.interfaces.WebComponent;
  * @param <S>
  *            type extending {@link TComponent}
  */
+@Entity
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class TNode<T extends TNode, S extends WebComponent> extends AbstractNode<T, S> implements Serializable {
+public class TNode<T extends TNode, S extends Similar & WebComponent> implements Node<T, S>, Code, Serializable {
     // ----------------------------------------------------------
     // fields
     // ----------------------------------------------------------
 
     private static final long serialVersionUID = 6776798141844716368L;
+
+    /**
+     * The (technical) identifier of this {@link TNode}
+     */
+    @Id
+    @Column(name = "nodeId", nullable = false)
+    private int nodeId;
+
+    /**
+     * The {@link TComponent} of this {@link TNode}
+     */
+    @OneToOne
+    private TComponent component;
+
+    /**
+     * The parent of this {@link TNode}
+     */
+    @ManyToOne
+    private TNode parent;
+
+    /**
+     * The children of this {@link TNode}
+     */
+    @OneToMany
+    private List<TNode> children;
+
+    /**
+     * The VLT code of this {@link TNode} (already taken into consideration the
+     * children's contribution)
+     */
+    @Column(name = "vtlCode", length = 100000)
+    private String vtlCode;
+
+    /**
+     * The VTL code of this {@link TNode} in Html format as used for website
+     * representation (already taken into consideration the children's
+     * contribution)
+     */
+    @Column(name = "vtlHtmlCode", length = 100000)
+    private String vtlHtmlCode;
+
+    // ----------------------------------------------------------
+    // constructor
+    // ----------------------------------------------------------
+
+    public TNode() {
+	super();
+    }
+
+    /**
+     * Please note that this constructor does not establish a bidirectional
+     * relation to the {@link #component}. The application must ensure that such
+     * a bidirectional connection is established.
+     * 
+     * @param component
+     *            the component related to this node
+     */
+    public TNode(TComponent component) {
+	super();
+	setComponent(component, false);
+    }
 
     // ----------------------------------------------------------
     // methods passing objects from data field
@@ -43,12 +117,48 @@ public class TNode<T extends TNode, S extends WebComponent> extends AbstractNode
 	return getData().getExpression();
     }
 
-    public TypeOfNode getType() {
+    public String getType() {
 	return getData().getType();
     }
 
     public String getComment() {
 	return getData().getComment();
+    }
+
+    // ----------------------------------------------------------
+    // get / set methods
+    // ----------------------------------------------------------
+
+    public int getNodeId() {
+	return nodeId;
+    }
+
+    public void setNodeId(int nodeId) {
+	this.nodeId = nodeId;
+    }
+
+    public String getVtlCode() {
+	return vtlCode;
+    }
+
+    public void setVtlCode(String vtlCode) {
+	this.vtlCode = vtlCode;
+    }
+
+    public String getVtlHtmlCode() {
+	return vtlHtmlCode;
+    }
+
+    public void setVtlHtmlCode(String vtlHtmlCode) {
+	this.vtlHtmlCode = vtlHtmlCode;
+    }
+
+    // ----------------------------------------------------------
+    // additional get methods
+    // ----------------------------------------------------------
+
+    public TypeOfNode getTypeOfNOde() {
+	return TContext.getTypeOfNode(getType());
     }
 
     // ----------------------------------------------------------
@@ -165,6 +275,113 @@ public class TNode<T extends TNode, S extends WebComponent> extends AbstractNode
 	    }
 	    parent.addChild(this);
 	}
+    }
+
+    public TComponent getComponent() {
+	return component;
+    }
+
+    public void setComponent(TComponent component) {
+	setComponent(component, true);
+    }
+
+    public void setComponent(TComponent component, boolean set) {
+	this.component = component;
+	if (component != null && set) {
+	    component.setNode(this, false);
+	}
+    }
+
+    // ----------------------------------------------------------
+    // methods inherited from node interface
+    // ----------------------------------------------------------
+
+    @Override
+    public S getData() {
+	return (S) getComponent();
+    }
+
+    @Override
+    public void setData(S data) {
+	setComponent((TComponent) data);
+    }
+
+    @Override
+    public T getParent() {
+	return (T) parent;
+    }
+
+    @Override
+    public void setParent(T parent, boolean set) {
+	this.parent = (TNode) parent;
+	if (parent != null && set) {
+	    parent.addChild(this, false);
+	}
+    }
+
+    @Override
+    public List<T> getChildren() {
+	return (List<T>) children;
+    }
+
+    @Override
+    public void setChildren(List<T> children, boolean set) {
+	this.children = (List<TNode>) children;
+	if (children != null && set) {
+	    Iterator<T> it = children.iterator();
+	    while (it.hasNext()) {
+		T child = it.next();
+		child.setParent(this, false);
+	    }
+	}
+    }
+
+    @Override
+    public void addChild(T child, boolean add, int position) {
+	if (getChildren().contains(child)) {
+	    getChildren().set(getChildren().indexOf(child), child);
+	} else {
+	    try {
+		getChildren().add(position, child);
+	    } catch (Exception e) {
+		System.out.println("WARNING [TNode.addChild()]: was not able to insert child at the given position ('"
+			+ position + "', '" + getNumberOfChildren() + "')!");
+		getChildren().add(child);
+	    }
+	}
+	if (add) {
+	    child.setParent(this, false);
+	}
+    }
+
+    @Override
+    public void removeChild(T child, boolean remove) {
+	if (getChildren().remove(child)) {
+	    if (remove) {
+		child.setParent(null);
+	    }
+	}
+    }
+
+    // ----------------------------------------------------------
+    // additional overrides
+    // ----------------------------------------------------------
+
+    @Override
+    public String getCode(Syntax syntax, Representation representation) {
+	String rString = new String();
+	if (syntax.equals(Syntax.VTL)) {
+	    if (representation.equals(Representation.STANDARD)) {
+		rString = getVtlCode();
+	    } else if (representation.equals(Representation.HTML)) {
+		rString = getVtlHtmlCode();
+	    } else {
+		// TODO: implement other types of representation
+	    }
+	} else {
+	    // TODO: implement other types of syntax
+	}
+	return rString;
     }
 
     // ----------------------------------------------------------
