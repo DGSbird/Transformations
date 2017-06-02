@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import ecb.generalObjects.interfaces.Identifiable;
 import ecb.generalObjects.languages.enums.Syntax;
 import ecb.generalObjects.representation.enums.Representation;
 import ecb.generalObjects.treeStructure.interfaces.Node;
@@ -26,10 +27,15 @@ import ecb.transformations.interfaces.components.WebComponent;
 import ecb.transformations.interfaces.nodes.Code;
 import ecb.transformations.interfaces.nodes.TypeOfNode;
 import ecb.transformations.metadata.TContext;
+import javax.persistence.NamedQuery;
+import javax.persistence.NamedQueries;
 
 /**
  * Transformation node class representing nodes of a transformation. The data
- * field of such a node must implement the {@link WebComponent} interface.<br>
+ * field of such a node must implement the @{@link Similar} and
+ * {@link WebComponent} interfaces.<br>
+ * BIRD interpretation of the SDMX information model for transformations of
+ * Transformation node object.<br>
  * TODO: implementation of getCode() method via related interface.
  * 
  * @author Dominik Lin
@@ -41,12 +47,27 @@ import ecb.transformations.metadata.TContext;
  */
 @Entity
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class TNode<T extends TNode, S extends Similar & WebComponent> implements Node<T, S>, Code, Serializable {
+
+@NamedQueries({ @NamedQuery(name = TNode.QUERY_GET_ALL, query = "SELECT n FROM TNode n"),
+	@NamedQuery(name = TNode.QUERY_FIND_BY_CODE, query = "SELECT n FROM TNode n WHERE n.code=:" + TNode.PARAM_CODE),
+	@NamedQuery(name = TNode.QUERY_FIND_BY_EXPRESSION, query = "SELECT n FROM TNode n JOIN n.component c WHERE c.expression=:"
+		+ TNode.PARAM_EXPRESSION) })
+public class TNode<T extends TNode, S extends TComponent> implements Node<T, S>, Identifiable, Code, Serializable {
     // ----------------------------------------------------------
     // fields
     // ----------------------------------------------------------
 
     private static final long serialVersionUID = 6776798141844716368L;
+
+    public static final String QUERY_GET_ALL = "TNode.getAll";
+
+    public static final String QUERY_FIND_BY_CODE = "TNode.findByCode";
+
+    public static final String QUERY_FIND_BY_EXPRESSION = "TNode.findByExpression";
+
+    public static final String PARAM_CODE = "code";
+
+    public static final String PARAM_EXPRESSION = "expression";
 
     /**
      * The (technical) identifier of this {@link TNode}
@@ -54,6 +75,12 @@ public class TNode<T extends TNode, S extends Similar & WebComponent> implements
     @Id
     @Column(name = "nodeId", nullable = false)
     private int nodeId;
+
+    /**
+     * The code of this {@link TNode}
+     */
+    @Column(name = "code")
+    private String code;
 
     /**
      * The {@link TComponent} of this {@link TNode}
@@ -135,6 +162,20 @@ public class TNode<T extends TNode, S extends Similar & WebComponent> implements
 
     public void setNodeId(int nodeId) {
 	this.nodeId = nodeId;
+    }
+
+    @Override
+    public Integer getIdentifier() {
+	return getNodeId();
+    }
+
+    @Override
+    public String getCode() {
+	return code;
+    }
+
+    public void setCode(String code) {
+	this.code = code;
     }
 
     public String getVtlCode() {
