@@ -5,10 +5,9 @@ import ecb.codeBuilder.interfaces.GenerateCode;
 import ecb.generalObjects.languages.enums.Syntax;
 import ecb.generalObjects.representation.enums.Representation;
 import ecb.transformations.enums.Bracket;
-import ecb.transformations.interfaces.components.Similar;
-import ecb.transformations.interfaces.components.WebComponent;
 import ecb.transformations.interfaces.nodes.Build;
 import ecb.transformations.interfaces.nodes.TypeOfNode;
+import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 
 public enum OpsWithTwoOperands implements TypeOfNode, Build {
@@ -88,7 +87,7 @@ public enum OpsWithTwoOperands implements TypeOfNode, Build {
     }
 
     @Override
-    public <T extends TNode<T, S>, S extends Similar & WebComponent> String buildCode(T node, Syntax syntax,
+    public <T extends TNode<T, S>, S extends TComponent> String buildCode(T node, Syntax syntax,
 	    Representation representation) {
 	// TODO: extend this method when adding additional syntax or
 	// representation
