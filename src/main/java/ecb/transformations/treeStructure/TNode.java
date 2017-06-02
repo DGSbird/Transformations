@@ -338,7 +338,6 @@ public class TNode<T extends TNode, S extends Similar & WebComponent> implements
 		child.setParent(this, false);
 	    }
 	}
-
     }
 
     @Override
@@ -348,10 +347,11 @@ public class TNode<T extends TNode, S extends Similar & WebComponent> implements
 	} else {
 	    try {
 		getChildren().add(position, child);
-	    } catch (Exception e) {
-		System.out.println("WARNING [TNode.addChild()]: was not able to insert child at the given position ('"
-			+ position + "', '" + getNumberOfChildren() + "')!");
+	    } catch (IndexOutOfBoundsException indexException) {
 		getChildren().add(child);
+		System.out.println(indexException.getMessage());
+	    } catch (Exception e) {
+		e.printStackTrace();
 	    }
 	}
 	if (add) {
@@ -366,7 +366,6 @@ public class TNode<T extends TNode, S extends Similar & WebComponent> implements
 		child.setParent(null);
 	    }
 	}
-
     }
 
     // ----------------------------------------------------------
