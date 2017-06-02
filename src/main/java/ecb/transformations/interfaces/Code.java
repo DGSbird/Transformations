@@ -1,9 +1,20 @@
 package ecb.transformations.interfaces;
 
-public interface VtlCode {
-    default public String getVtlCode() {
-	return getVtlCode(false);
+import ecb.generalObjects.languages.enums.Syntax;
+import ecb.generalObjects.representation.enums.Representation;
+
+public interface Code {
+    public String getCode(Syntax syntax, Representation representation);
+
+    default public String getCode() {
+	return getCode(Syntax.VTL, Representation.STANDARD);
     };
 
-    public String getVtlCode(boolean htmlConfig);
+    default public String getCode(Syntax syntax) {
+	return getCode(syntax, Representation.STANDARD);
+    };
+
+    default public String getCode(Representation representation) {
+	return getCode(Syntax.VTL, representation);
+    };
 }

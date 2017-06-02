@@ -1,7 +1,24 @@
 package ecb.transformations.interfaces;
 
-import ecb.transformations.BirdVtl.TNode;
+import ecb.generalObjects.languages.enums.Syntax;
+import ecb.generalObjects.representation.enums.Representation;
+import ecb.transformations.treeStructure.TNode;
 
-public interface VtlBuild {
-    public <T extends TNode<T, S>, S extends WebComponent> String buildVtlCode(T node, boolean htmlConfig);
+public interface Build {
+    public <T extends TNode<T, S>, S extends Similar & WebComponent> String buildCode(T node, Syntax syntax,
+	    Representation representation);
+
+    default public <T extends TNode<T, S>, S extends Similar & WebComponent> String buildCode(T node, Syntax syntax) {
+	return buildCode(node, syntax, Representation.STANDARD);
+    };
+
+    default public <T extends TNode<T, S>, S extends Similar & WebComponent> String buildCode(T node,
+	    Representation representation) {
+	return buildCode(node, Syntax.VTL, representation);
+    };
+
+    default public <T extends TNode<T, S>, S extends Similar & WebComponent> String buildCode(T node) {
+	return buildCode(node, Syntax.VTL, Representation.STANDARD);
+    };
+
 }
