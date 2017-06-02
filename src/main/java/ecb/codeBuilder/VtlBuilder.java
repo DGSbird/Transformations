@@ -2,13 +2,13 @@ package ecb.codeBuilder;
 
 import ecb.codeBuilder.interfaces.GenerateCode;
 import ecb.generalObjects.representation.enums.Representation;
+import ecb.transformations.abstractClasses.Component;
 import ecb.transformations.enums.Bracket;
-import ecb.transformations.interfaces.components.Similar;
-import ecb.transformations.interfaces.components.WebComponent;
 import ecb.transformations.interfaces.nodes.Code;
 import ecb.transformations.interfaces.nodes.TypeOfNode;
 import ecb.transformations.operators.enums.InvisibleOps;
 import ecb.transformations.operators.enums.OpsWithTwoOperands;
+import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 
 /**
@@ -48,14 +48,16 @@ public class VtlBuilder implements GenerateCode {
     // ----------------------------------------------------------
 
     @Override
-    public <T extends TNode<T, S>, S extends Similar & WebComponent> String generateCode(T node,
-	    Representation representation) {
+    public <T extends TNode<T, S>, S extends TComponent> String generateCode(T node, Representation representation) {
 	String rString = new String();
 	if (typeOfNode != null) {
 	    String EOL = typeOfNode.getEOL();
 	    String separator = typeOfNode.getSeparator();
+	    @SuppressWarnings("unused")
 	    String alias = typeOfNode.getAlias();
+	    @SuppressWarnings("unused")
 	    Bracket bracket = typeOfNode.getBracket();
+	    @SuppressWarnings("unused")
 	    String separatorOperatorChildren = typeOfNode.getOperatorChildrenSeparator();
 
 	    if (typeOfNode instanceof OpsWithTwoOperands) {
