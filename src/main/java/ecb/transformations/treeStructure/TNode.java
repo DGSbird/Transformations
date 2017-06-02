@@ -51,7 +51,9 @@ import javax.persistence.NamedQueries;
 @NamedQueries({ @NamedQuery(name = TNode.QUERY_GET_ALL, query = "SELECT n FROM TNode n"),
 	@NamedQuery(name = TNode.QUERY_FIND_BY_CODE, query = "SELECT n FROM TNode n WHERE n.code=:" + TNode.PARAM_CODE),
 	@NamedQuery(name = TNode.QUERY_FIND_BY_EXPRESSION, query = "SELECT n FROM TNode n JOIN n.component c WHERE c.expression=:"
-		+ TNode.PARAM_EXPRESSION) })
+		+ TNode.PARAM_EXPRESSION),
+	@NamedQuery(name = TNode.QUERY_FIND_BY_TYPE, query = "SELECT n FROM TNode n JOIN n.component c WHERE c.type=:"
+		+ TNode.PARAM_TYPE) })
 public class TNode<T extends TNode, S extends TComponent> implements Node<T, S>, Identifiable, Code, Serializable {
     // ----------------------------------------------------------
     // fields
@@ -65,9 +67,13 @@ public class TNode<T extends TNode, S extends TComponent> implements Node<T, S>,
 
     public static final String QUERY_FIND_BY_EXPRESSION = "TNode.findByExpression";
 
+    public static final String QUERY_FIND_BY_TYPE = "TNode.findByType";
+
     public static final String PARAM_CODE = "code";
 
     public static final String PARAM_EXPRESSION = "expression";
+
+    public static final String PARAM_TYPE = "type";
 
     /**
      * The (technical) identifier of this {@link TNode}
