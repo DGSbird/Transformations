@@ -94,6 +94,7 @@ public class TTree<T extends TNode<T, S>, S extends TComponent> implements Tree<
 			result = rList;
 		    }
 		}
+		i++;
 	    }
 	}
 	return result;
@@ -147,6 +148,7 @@ public class TTree<T extends TNode<T, S>, S extends TComponent> implements Tree<
 			result = rList;
 		    }
 		}
+		i++;
 	    }
 	}
 	return result;
