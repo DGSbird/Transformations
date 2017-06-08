@@ -7,7 +7,9 @@ import junit.framework.TestCase;
 
 /**
  * Test case for {@link TComponent} class. Please note that this test case does
- * not cover connections to other objects (e.g. transformation node).
+ * not cover connections to other objects (e.g. transformation node). Please
+ * note that this test case also covers methods inherited from the
+ * {@link Component} class.
  * 
  * @author Dominik Lin
  *
@@ -28,6 +30,14 @@ public class TestTComponent extends TestCase {
 
     String type;
 
+    String comment;
+
+    String location;
+
+    String tooltip;
+
+    String description;
+
     public TestTComponent() {
 	super("TestTComponent");
     }
@@ -38,8 +48,16 @@ public class TestTComponent extends TestCase {
 	componentId = 0;
 	expression = "expression";
 	type = "type";
+	comment = "comment";
+	location = "location";
+	description = "description";
+	tooltip = "tooltip";
 	component = new TComponent(expression, type);
 	component.setComponentId(componentId);
+	component.setLocation(location);
+	component.setDescription(description);
+	component.setTooltip(tooltip);
+	component.setComment(comment);
 	equalRef = new TComponent(expression, type);
 	equalRef.setComponentId(componentId);
 	inEqualRef = new TComponent(expression + " other", type + " other");
@@ -71,7 +89,41 @@ public class TestTComponent extends TestCase {
 	assertTrue(component.isSimilar(similar));
 	assertTrue(similar.isSimilar(component));
 	assertFalse(component.isSimilar(inEqualRef));
+    }
 
+    @Test
+    public void testGetId() {
+	assertTrue(component.getComponentId() == componentId);
+    }
+
+    @Test
+    public void testGetExpression() {
+	assertTrue(component.getExpression().equals(expression));
+    }
+
+    @Test
+    public void testGetType() {
+	assertTrue(component.getType().equals(type));
+    }
+
+    @Test
+    public void testGetComment() {
+	assertTrue(component.getComment().equals(comment));
+    }
+
+    @Test
+    public void testGetLocation() {
+	assertTrue(component.getLocation().equals(location));
+    }
+
+    @Test
+    public void testGetTooltip() {
+	assertTrue(component.getTooltip().equals(tooltip));
+    }
+
+    @Test
+    public void testGetDescription() {
+	assertTrue(component.getDescription().equals(description));
     }
 
 }
