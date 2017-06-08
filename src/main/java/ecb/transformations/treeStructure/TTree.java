@@ -3,6 +3,8 @@ package ecb.transformations.treeStructure;
 import java.util.ArrayList;
 import java.util.List;
 
+import ecb.generalObjects.treeStructure.abstractClasses.AbstractTree;
+import ecb.generalObjects.treeStructure.interfaces.Node;
 import ecb.generalObjects.treeStructure.interfaces.Tree;
 import ecb.transformations.interfaces.components.Similar;
 import ecb.transformations.interfaces.components.WebComponent;
@@ -23,7 +25,8 @@ import ecb.transformations.interfaces.components.WebComponent;
  *            type implementing {@link Similar} and {@link WebComponent}
  *            interfaces
  */
-public class TTree<T extends TNode<T, S>, S extends TComponent> implements Tree<T, S> {
+public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> extends AbstractTree<T, S>
+	implements Tree<T, S> {
     // ----------------------------------------------------------
     // fields
     // ----------------------------------------------------------
