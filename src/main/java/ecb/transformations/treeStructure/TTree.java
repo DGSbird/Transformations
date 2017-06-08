@@ -99,4 +99,57 @@ public class TTree<T extends TNode<T, S>, S extends TComponent> implements Tree<
 	return result;
     }
 
+    public List<T> findAllByType(String type) {
+	return findAllByTypeOrExpression(type, true);
+    }
+
+    public List<T> findAllByExpression(String expression) {
+	return findAllByTypeOrExpression(expression, false);
+    }
+
+    public List<T> auxiliaryFindAllByType(T currentNode, String type) {
+	return auxiliaryFindAllByTypeOrExpression(currentNode, type, true);
+    }
+
+    public List<T> auxilaryFindAllByExpression(T currentNode, String expression) {
+	return auxiliaryFindAllByTypeOrExpression(currentNode, expression, false);
+    }
+
+    private List<T> findAllByTypeOrExpression(String typeOrExpression, boolean type) {
+	List<T> result = null;
+	if (!isEmpty()) {
+	    List<T> rList = null;
+	    rList = auxiliaryFindAllByTypeOrExpression(getRoot(), typeOrExpression, type);
+	    if (rList != null && !rList.isEmpty()) {
+		result = new ArrayList<>();
+		result.addAll(rList);
+	    }
+	}
+	return result;
+    }
+
+    private List<T> auxiliaryFindAllByTypeOrExpression(T currentNode, String typeOrExpression, boolean type) {
+	List<T> result = null;
+	String comp = (type) ? currentNode.getType() : currentNode.getExpression();
+	if (typeOrExpression.equals(comp)) {
+	    result = new ArrayList<>();
+	    result.add(currentNode);
+	}
+	if (currentNode.hasChildren()) {
+	    int i = 0;
+	    while (i < currentNode.getNumberOfChildren()) {
+		List<T> rList = null;
+		rList = auxiliaryFindAllByTypeOrExpression((T) currentNode.getChildAt(i), typeOrExpression, type);
+		if (rList != null && !rList.isEmpty()) {
+		    if (result != null) {
+			result.addAll(rList);
+		    } else {
+			result = rList;
+		    }
+		}
+	    }
+	}
+	return result;
+    }
+
 }
