@@ -130,16 +130,13 @@ public class TNode<T extends TNode, S extends TComponent> implements Node<T, S>,
     }
 
     /**
-     * Please note that this constructor does not establish a bidirectional
-     * relation to the {@link #component}. The application must ensure that such
-     * a bidirectional connection is established.
      * 
      * @param component
      *            the component related to this node
      */
     public TNode(TComponent component) {
 	super();
-	setComponent(component, false);
+	setComponent(component);
     }
 
     // ----------------------------------------------------------
@@ -159,7 +156,7 @@ public class TNode<T extends TNode, S extends TComponent> implements Node<T, S>,
     }
 
     // ----------------------------------------------------------
-    // get / set methods
+    // (scalar) get / set methods
     // ----------------------------------------------------------
 
     public int getNodeId() {
