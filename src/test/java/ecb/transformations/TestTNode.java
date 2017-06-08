@@ -10,6 +10,17 @@ import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 import junit.framework.TestCase;
 
+/**
+ * Test case for the {@link TNode} class. Please note that this test case does
+ * not cover the interaction with the persistence context.
+ * 
+ * @author Dominik Lin
+ *
+ * @param <T>
+ *            a type extending the {@link TNode} class
+ * @param <S>
+ *            a type extending the {@link TComponent} class
+ */
 public class TestTNode<T extends TNode<T, S>, S extends TComponent> extends TestCase {
 
     // objects related to test case one
