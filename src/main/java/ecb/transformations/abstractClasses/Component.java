@@ -16,7 +16,7 @@ import ecb.transformations.interfaces.components.WebComponent;
  */
 @MappedSuperclass
 
-public class Component implements Similar, WebComponent, Serializable {
+public abstract class Component implements Similar, WebComponent, Serializable {
     // ----------------------------------------------------------
     // fields
     // ----------------------------------------------------------
