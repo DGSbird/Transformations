@@ -3,6 +3,8 @@ package ecb.transformations.functions;
 import java.util.ArrayList;
 import java.util.List;
 
+import ecb.transformations.enums.Bracket;
+
 public class Functions {
 
     public static <T> List<T> getReverseOrderedList(List<T> list) {
@@ -14,4 +16,10 @@ public class Functions {
 	}
 	return rList;
     }
+
+    public static String coverInBrackets(String content, Bracket bracket) {
+	String rString = bracket.getLeft() + content + bracket.getRight();
+	return rString;
+    }
+
 }
