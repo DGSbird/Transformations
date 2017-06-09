@@ -29,8 +29,8 @@ public enum OpsWithTwoOperands implements TypeOfNode, Build {
     OR("or", Bracket.ROUND),
     IN("in"),
     NOT_IN("not in"),
-    DEF(":=", Bracket.NONE, ";"),
-    DOT(".", Bracket.NONE, ""),
+    DEF(":=", " ", ";"),
+    DOT(".", ""),
     AS("as"),
     ROLE("role"),
     CONCAT("||", Bracket.ROUND);
@@ -41,9 +41,11 @@ public enum OpsWithTwoOperands implements TypeOfNode, Build {
 
     private String typeOfNode;
 
-    private Bracket bracket;
+    private Bracket bracket = Bracket.NONE;
 
-    private String EOL;
+    private String separator = " ";
+
+    private String EOL = "";
 
     // ----------------------------------------------------------
     // constructor
@@ -51,19 +53,27 @@ public enum OpsWithTwoOperands implements TypeOfNode, Build {
 
     OpsWithTwoOperands(String typeOfNode) {
 	this.typeOfNode = typeOfNode;
-	this.bracket = Bracket.NONE;
-	this.EOL = "";
     }
 
     OpsWithTwoOperands(String typeOfNode, Bracket bracket) {
 	this.typeOfNode = typeOfNode;
 	this.bracket = bracket;
-	this.EOL = "";
     }
 
-    OpsWithTwoOperands(String typeOfNode, Bracket bracket, String EOL) {
+    OpsWithTwoOperands(String typeOfNode, String separator) {
+	this.typeOfNode = typeOfNode;
+	this.separator = separator;
+    }
+
+    OpsWithTwoOperands(String typeOfNode, Bracket bracket, String separator) {
 	this.typeOfNode = typeOfNode;
 	this.bracket = bracket;
+	this.separator = separator;
+    }
+
+    OpsWithTwoOperands(String typeOfNode, String separator, String EOL) {
+	this.typeOfNode = typeOfNode;
+	this.separator = separator;
 	this.EOL = EOL;
     }
 
@@ -82,9 +92,18 @@ public enum OpsWithTwoOperands implements TypeOfNode, Build {
     }
 
     @Override
+    public String getSeparator() {
+	return separator;
+    }
+
+    @Override
     public String getEOL() {
 	return EOL;
     }
+
+    // ----------------------------------------------------------
+    // build
+    // ----------------------------------------------------------
 
     @Override
     public <T extends TNode<T, S>, S extends TComponent> String buildCode(T node, Syntax syntax,
@@ -95,6 +114,8 @@ public enum OpsWithTwoOperands implements TypeOfNode, Build {
 	GenerateCode builder = null;
 	if (syntax.equals(Syntax.VTL)) {
 	    builder = new VtlBuilder();
+	} else if (syntax.equals(Syntax.SQL)) {
+	    // set builder to SqlBuilder
 	} else {
 	    // TODO: implement SQL syntax generation
 	}
