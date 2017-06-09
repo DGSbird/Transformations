@@ -9,6 +9,10 @@ import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 
 public enum InvisibleOps implements TypeOfNode, Build {
+    // ----------------------------------------------------------
+    // components
+    // ----------------------------------------------------------
+
     PARAMETERS("Parameters", Bracket.ROUND, ", "),
     IF_THEN_ELSE("IfThenElseExpr", Bracket.ROUND, " </br>"),
     JOIN_CLAUSE("JoinClause", Bracket.SQUARE),
@@ -25,11 +29,19 @@ public enum InvisibleOps implements TypeOfNode, Build {
     FUNCTION_CALL("FunctionCall", Bracket.ROUND),
     AGGREGATE_FUNCTION("AggregateFunction", Bracket.NONE);
 
+    // ----------------------------------------------------------
+    // fields
+    // ----------------------------------------------------------
+
     String typeOfNode;
 
-    Bracket bracket;
+    Bracket bracket = Bracket.NONE;
 
-    String separator;
+    String separator = "";
+
+    // ----------------------------------------------------------
+    // constructor
+    // ----------------------------------------------------------
 
     private InvisibleOps(String typeOfNode, Bracket bracket) {
 	this.typeOfNode = typeOfNode;
@@ -42,6 +54,10 @@ public enum InvisibleOps implements TypeOfNode, Build {
 	this.separator = separator;
 
     }
+
+    // ----------------------------------------------------------
+    // get methods
+    // ----------------------------------------------------------
 
     @Override
     public String getTypeOfNode() {
@@ -57,6 +73,10 @@ public enum InvisibleOps implements TypeOfNode, Build {
     public String getSeparator() {
 	return separator;
     }
+
+    // ----------------------------------------------------------
+    // build
+    // ----------------------------------------------------------
 
     @Override
     public <T extends TNode<T, S>, S extends TComponent> String buildCode(T node, Syntax syntax,
