@@ -9,11 +9,17 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
+import ecb.transformations.enums.Bracket;
 import ecb.transformations.informationModel.TScheme;
 import ecb.transformations.informationModel.Transformation;
 import ecb.transformations.interfaces.nodes.TypeOfNode;
+import ecb.transformations.operators.enums.DatasetOps;
 import ecb.transformations.operators.enums.InvisibleOps;
+import ecb.transformations.operators.enums.Leafs;
+import ecb.transformations.operators.enums.MethodNode;
+import ecb.transformations.operators.enums.OpsWithFollowingOperands;
 import ecb.transformations.operators.enums.OpsWithTwoOperands;
+import ecb.transformations.operators.enums.SpecialNode;
 import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 
@@ -28,9 +34,23 @@ public class TContext {
     // ----------------------------------------------------------
     // fields
     // ----------------------------------------------------------
-    final public static String origin = "origin";
+    final public static String CONST_ORIGIN = "origin";
 
-    final public static String eof = "<EOF>";
+    final public static String CONST_EOF = "<EOF>";
+
+    public static final String CONST_ERROR_NODE_IMPL = "ErrorNodeImpl";
+
+    public static final String CONST_TERMINAL_NODE_IMPL = "TerminalNodeImpl";
+
+    public static final String CONST_SEMICOLON = ";";
+
+    public static final String CONST_COMMA = ",";
+
+    public static final String CONST_COLON = ":";
+
+    public static final String CONST_BLANK = "";
+
+    public static List<String> remains;
 
     /**
      * A complete list containing all allowed types of nodes (e.g. definition
@@ -65,7 +85,33 @@ public class TContext {
 	for (TypeOfNode typeOfNode : OpsWithTwoOperands.values()) {
 	    TypesOfNodes.add(typeOfNode);
 	}
+	for (TypeOfNode typeOfNode : DatasetOps.values()) {
+	    TypesOfNodes.add(typeOfNode);
+	}
+	for (TypeOfNode typeOfNode : Leafs.values()) {
+	    TypesOfNodes.add(typeOfNode);
+	}
+	for (TypeOfNode typeOfNode : MethodNode.values()) {
+	    TypesOfNodes.add(typeOfNode);
+	}
+	for (TypeOfNode typeOfNode : OpsWithFollowingOperands.values()) {
+	    TypesOfNodes.add(typeOfNode);
+	}
+	for (TypeOfNode typeOfNode : SpecialNode.values()) {
+	    TypesOfNodes.add(typeOfNode);
+	}
 
+	remains = new ArrayList<>();
+	remains.add(CONST_SEMICOLON);
+	remains.add(CONST_COLON);
+	remains.add(CONST_COMMA);
+	remains.add(CONST_BLANK);
+	remains.add(Bracket.ROUND.getLeft());
+	remains.add(Bracket.ROUND.getRight());
+	remains.add(Bracket.SQUARE.getLeft());
+	remains.add(Bracket.SQUARE.getRight());
+	remains.add(Bracket.CURLED.getLeft());
+	remains.add(Bracket.CURLED.getRight());
     }
 
     // ----------------------------------------------------------
