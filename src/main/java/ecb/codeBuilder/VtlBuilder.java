@@ -2,7 +2,6 @@ package ecb.codeBuilder;
 
 import ecb.codeBuilder.interfaces.GenerateCode;
 import ecb.generalObjects.representation.enums.Representation;
-import ecb.transformations.abstractClasses.Component;
 import ecb.transformations.enums.Bracket;
 import ecb.transformations.interfaces.nodes.Code;
 import ecb.transformations.interfaces.nodes.TypeOfNode;
@@ -53,16 +52,14 @@ public class VtlBuilder implements GenerateCode {
 	if (typeOfNode != null) {
 	    String EOL = typeOfNode.getEOL();
 	    String separator = typeOfNode.getSeparator();
-	    @SuppressWarnings("unused")
 	    String alias = typeOfNode.getAlias();
-	    @SuppressWarnings("unused")
 	    Bracket bracket = typeOfNode.getBracket();
-	    @SuppressWarnings("unused")
 	    String separatorOperatorChildren = typeOfNode.getOperatorChildrenSeparator();
 
 	    if (typeOfNode instanceof OpsWithTwoOperands) {
 		/*
-		 * structure: code(child(0)) type(operator) code(child(1))
+		 * structure: code(child(0)) separator type(operator) separator
+		 * code(child(1)) EOL
 		 */
 		try {
 		    T child0 = (T) node.getChildAt(0);
