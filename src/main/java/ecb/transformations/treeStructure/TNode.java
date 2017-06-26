@@ -217,8 +217,8 @@ public class TNode<T extends TNode, S extends TComponent> implements Node<T, S>,
     public void reorderChildren() {
 	if (hasChildren()) {
 	    String expression = getData().getExpression();
-	    if (expression != null && !expression.isEmpty() && !expression.equals(TContext.origin)
-		    && !expression.equals(TContext.eof)) {
+	    if (expression != null && !expression.isEmpty() && !expression.equals(TContext.CONST_ORIGIN)
+		    && !expression.equals(TContext.CONST_EOF)) {
 		Map<Integer, Boolean> isOccupied = new HashMap<Integer, Boolean>();
 		for (int i = 0; i < expression.length(); i++) {
 		    isOccupied.put(i, false);
