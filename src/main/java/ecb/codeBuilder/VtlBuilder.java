@@ -1,12 +1,20 @@
 package ecb.codeBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ecb.codeBuilder.interfaces.GenerateCode;
 import ecb.generalObjects.representation.enums.Representation;
 import ecb.transformations.enums.Bracket;
 import ecb.transformations.interfaces.nodes.Code;
 import ecb.transformations.interfaces.nodes.TypeOfNode;
+import ecb.transformations.operators.enums.DatasetOps;
 import ecb.transformations.operators.enums.InvisibleOps;
+import ecb.transformations.operators.enums.Leafs;
+import ecb.transformations.operators.enums.MethodNode;
+import ecb.transformations.operators.enums.OpsWithFollowingOperands;
 import ecb.transformations.operators.enums.OpsWithTwoOperands;
+import ecb.transformations.operators.enums.SpecialNode;
 import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 
@@ -46,6 +54,55 @@ public class VtlBuilder implements GenerateCode {
     // methods
     // ----------------------------------------------------------
 
+    public static <T> int getPosition(String term, T[] list) {
+	List<T> tList = new ArrayList<>();
+	for (T t : list) {
+	    tList.add(t);
+	}
+	return getPosition(term, tList);
+    }
+
+    public static <T> int getPosition(String term, List<T> list) {
+	int rValue = (-1);
+	if (contains(term, list)) {
+	    rValue = term.length();
+	    int i = 0;
+	    do {
+		int pos = term.indexOf(list.get(i).toString());
+		if (pos > 0 && pos < rValue) {
+		    rValue = pos;
+		}
+		i++;
+	    } while (i < list.size());
+	}
+	return rValue;
+    }
+
+    public static <T> boolean contains(String term, T[] list) {
+	List<T> tList = new ArrayList<>();
+	for (T t : list) {
+	    tList.add(t);
+	}
+	return contains(term, tList);
+    }
+
+    public static <T> boolean contains(String term, List<T> list) {
+	boolean found = false;
+	int i = 0;
+	do {
+	    if (term.contains(list.get(i).toString())) {
+		found = true;
+	    } else {
+		i++;
+	    }
+	} while (i < list.size() && !found);
+	return found;
+    }
+
+    public String cover(Bracket bracket, String content) {
+	return bracket.getLeft() + content + bracket.getRight();
+    }
+
     @Override
     public <T extends TNode<T, S>, S extends TComponent> String generateCode(T node, Representation representation) {
 	String rString = new String();
@@ -71,13 +128,163 @@ public class VtlBuilder implements GenerateCode {
 		    e.printStackTrace();
 		}
 
+	    } else if (typeOfNode instanceof OpsWithFollowingOperands) {
+		/*
+		 * structure: typeOfNode(node) 
+		 */
+		for (int i = 0; i < node.getNumberOfChildren(); i++) {
+		    if (i == 0) {
+			rString += ((Code) node.getChildAt(i)).getCode(representation);
+		    } else {
+			rString += separator + ((Code) node.getChildAt(i)).getCode(representation);
+		    }
+		}
+		rString = typeOfNode.getTypeOfNode() + separatorOperatorChildren + cover(bracket, rString) + EOL;
 	    } else if (typeOfNode instanceof InvisibleOps) {
 		/*
-		 * structure: code(child(0))
+		 * structure: code(child(0)) separator code(child(1)) separator
+		 * code(child(2))...
+		 */
+		try {
+		    for (int i = 0; i < node.getNumberOfChildren(); i++) {
+			T child = (T) node.getChildAt(i);
+			if (i == 0) {
+			    rString += ((Code) child).getCode(representation);
+			} else {
+			    rString += separator + ((Code) child).getCode(representation);
+			}
+		    }
+		    rString = cover(bracket, rString);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+	    } else if (typeOfNode instanceof DatasetOps) {
+		/*
+		 * TODO: statements containing get and multiple clause operators
+		 * structure:
 		 */
 
+		try {
+		    rString = "";
+		    T child0 = (T) node.getChildAt(0);
+		    T child1 = (T) node.getChildAt(1);
+
+		    String possibleDataset = ((Code) child0).getCode(representation);
+		    boolean isJoinedSet = (possibleDataset.startsWith(Bracket.SQUARE.getLeft())) ? true : false;
+		    boolean containsClauseOp = contains(possibleDataset, DatasetOps.values());
+		    boolean isGetSet = (possibleDataset.startsWith("get")) ? true : false;
+
+		    String expression0 = ((Code) child0).getCode(representation);
+		    String expression1 = ((Code) child1).getCode(representation);
+
+		    rString = generateCode(isJoinedSet, isGetSet, containsClauseOp, expression0, expression1,
+			    representation, typeOfNode, separator, bracket);
+
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+
+	    } else if (typeOfNode instanceof Leafs) {
+		/*
+		 * structure: comment(node) blank expression(node)
+		 */
+		rString = (node.getComment() != null && !node.getComment().isEmpty())
+			? node.getComment() + "" + node.getExpression() : node.getExpression();
+	    } else if (typeOfNode instanceof MethodNode) {
+		/*
+		 * structure: alias code(child(0)) separator [ code(child(1)) ]
+		 */
+		T child0 = (T) node.getChildAt(0);
+		T child1 = (T) node.getChildAt(1);
+		// TODO check if comment is relevant in this case
+		String comment = (node.getComment() != null && !node.getComment().isEmpty()) ? node.getComment() : "";
+		rString = alias + separator + ((Code) child0).getCode(representation) + separator
+			+ cover(bracket, ((Code) child1).getCode(representation));
+	    } else if (typeOfNode instanceof SpecialNode) {
+		/*
+		 * structure: expression(node) + ":" + separatorOperatorChildren
+		 * + code(child(0)) + "\n" + code(child(1) + ... + EOL
+		 */
+		rString = node.getExpression() + ":" + separatorOperatorChildren;
+		for (int i = 0; i < node.getNumberOfChildren(); i++) {
+		    if (i == 0) {
+			rString += ((Code) node.getChildAt(i)).getCode(representation);
+		    } else if (i == node.getNumberOfChildren() - 1) {
+			rString += separator + ((Code) node.getChildAt(i)).getCode(representation);
+		    } else {
+			rString += separator + ((Code) node.getChildAt(i)).getCode(representation) + "\n";
+		    }
+		}
+		rString += EOL;
 	    } else {
 		// TODO: implement other types of operators
+	    }
+	}
+	return rString;
+    }
+
+    private String generateCode(boolean isJoinedSet, boolean isGetSet, boolean containsClauseOp, String term1,
+	    String term2, Representation representation, TypeOfNode operator, String separator, Bracket bracket) {
+	String rString = "";
+
+	String symbolToFind = "";
+
+	if (containsClauseOp) {
+	    if (isJoinedSet && isGetSet) {
+		int pos = getPosition(term1, DatasetOps.values());
+		if (pos > 0) {
+		    String transformation = term1;
+		    rString = transformation.substring(0, pos) + operator.getTypeOfNode() + separator
+			    + cover(bracket, term2) + ", " + transformation.substring(pos, transformation.length());
+		}
+	    } else if (!isJoinedSet && isGetSet) {
+		symbolToFind = Bracket.ROUND.getRight();
+		int pos = term1.lastIndexOf(symbolToFind);
+		if (pos > 0) {
+		    String transformation = term1;
+		    rString = transformation.substring(0, pos) + ", " + operator.getTypeOfNode() + separator
+			    + cover(bracket, term2) + symbolToFind;
+		}
+	    } else if (!isJoinedSet && !isGetSet) {
+		symbolToFind = Bracket.SQUARE.getRight();
+		int pos = term1.lastIndexOf(symbolToFind);
+		if (pos > 0) {
+		    String transformation = term1;
+		    rString = transformation.substring(0, pos) + ", " + operator.getTypeOfNode() + separator
+			    + cover(bracket, term2) + symbolToFind;
+		}
+	    } else {
+		// throw exception: expression cannot be a joined set and a get
+		// at the same time!
+	    }
+	} else {
+	    if (isJoinedSet && isGetSet) {
+		symbolToFind = Bracket.CURLED.getRight();
+		int pos = term1.lastIndexOf(symbolToFind);
+		if (pos > 0) {
+		    String transformation = term1;
+		    if (transformation.subSequence(pos - 1, pos).equals("{")) {
+			rString = transformation.substring(0, pos) + operator.getTypeOfNode() + separator
+				+ cover(bracket, term2) + symbolToFind;
+		    } else {
+			rString = transformation.substring(0, pos) + ", " + toString() + separator
+				+ cover(bracket, term2) + symbolToFind;
+		    }
+		}
+	    } else if (!isJoinedSet && isGetSet) {
+		symbolToFind = Bracket.ROUND.getRight();
+		int pos = term1.lastIndexOf(symbolToFind);
+		if (pos > 0) {
+		    String transformation = term1;
+		    rString = transformation.substring(0, pos) + ", " + toString() + separator + cover(bracket, term2)
+			    + symbolToFind;
+		}
+	    } else if (!isJoinedSet && !isGetSet) {
+		rString = term1 + separator + Bracket.SQUARE.getLeft() + toString() + separator + cover(bracket, term2)
+			+ Bracket.SQUARE.getRight();
+	    } else {
+		// throw exception: expression cannot be a joined set and a get
+		// at the same time!
 	    }
 	}
 	return rString;
