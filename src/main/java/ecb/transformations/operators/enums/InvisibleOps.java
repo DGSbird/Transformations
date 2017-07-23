@@ -14,15 +14,15 @@ public enum InvisibleOps implements TypeOfNode, Build {
     // ----------------------------------------------------------
 
     PARAMETERS("Parameters", Bracket.ROUND, ", "),
-    IF_THEN_ELSE("IfThenElseExpr", Bracket.ROUND, " </br>"),
+    IF_THEN_ELSE("IfThenElseExpr", Bracket.ROUND, " "),
     JOIN_CLAUSE("JoinClause", Bracket.SQUARE),
     TYPE_OF_JOIN("Type of join", Bracket.NONE),
     DATASETS_TO_BE_JOINED("Datasets to be joined", Bracket.NONE, ", "),
     JOIN_BODY("JoinBody", Bracket.CURLED),
     JOIN_EXPRESSION("JoinExpr", Bracket.NONE),
     FUNCTION_BODY("FunctionBody", Bracket.CURLED),
-    PROCEDURE_BODY("ProcedureBody", Bracket.CURLED, " </br>"),
-    RULESET_BODY("RulesetBody", Bracket.CURLED, " </br>"),
+    PROCEDURE_BODY("ProcedureBody", Bracket.CURLED, " "),
+    RULESET_BODY("RulesetBody", Bracket.CURLED, " "),
     FUNCTION_DEFINITION("Function definition", Bracket.NONE),
     RULESET_DEFINITION("Ruleset definition", Bracket.NONE),
     PROCEDURE_DEFINITION("Procedure definition", Bracket.NONE),
