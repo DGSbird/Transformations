@@ -40,7 +40,7 @@ import ecb.transformations.operators.enums.SpecialNode;
  *            type implementing {@link Similar} and {@link WebComponent}
  *            interfaces
  */
-@SuppressWarnings({"unchecked", "unused"})
+@SuppressWarnings({ "unchecked", "unused" })
 public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> extends AbstractTree<T, S>
 	implements Tree<T, S> {
     // ----------------------------------------------------------
@@ -437,7 +437,7 @@ public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> ext
     }
 
     /**
-     * Searches for specific types of nodes in the tree structure (i.e.
+     * Searches for specific types of nodes in this tree structure (i.e.
      * <code>toFind</code>). If such a node is found this methods searches for
      * another specific node (<code>futureParent</code>) having the same parent
      * (i.e. a sibling) and performs the operations necessary to make the toFind
@@ -470,7 +470,7 @@ public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> ext
 		    int iMax = parent.getNumberOfChildren();
 		    do {
 			T currentNode = (T) parent.getChildAt(i);
-			if (currentNode.getData().equals(futureParent)) {
+			if (currentNode.getData().isSimilar(futureParent)) {
 			    found = true;
 			    futureParentNode = currentNode;
 			} else {
@@ -860,6 +860,7 @@ public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> ext
 	    node.addChild(child, 0);
 	} else {
 	    makePreviousSiblingChild(node, 0);
+	    makeNextSiblingChild(node);
 	}
 
     }
@@ -895,12 +896,17 @@ public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> ext
 	String ifString = OpsWithFollowingOperands.IF.getTypeOfNode();
 	String elseIfString = OpsWithFollowingOperands.ELSEIF.getTypeOfNode();
 	String thenString = OpsWithFollowingOperands.THEN.getTypeOfNode();
+	
 	S ifType = (S) new TComponent(ifString, ifString);
 	S elseIfType = (S) new TComponent(elseIfString, elseIfString);
 	S thenType = (S) new TComponent(thenString, thenString);
+	
 	findAndBecomeChildOf((S) thenType, (S) ifType, true);
+	System.out.println(this.toStringWithDepth());
+	
 	findAndBecomeChildOf((S) thenType, (S) elseIfType, true);
-
+	System.out.println(this.toStringWithDepth());
+	
 	// set expression and type of (invisible) if-then-else node
 	String ifThenElseString = InvisibleOps.IF_THEN_ELSE.getTypeOfNode();
 	List<T> nodes = findAllByType(ifThenElseString);
@@ -1081,7 +1087,8 @@ public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> ext
      * @param body
      *            the <code>returns</code> node
      */
-    private void restructureFunctionDef(T parent, T fDef, T fID, T parameters, T body) throws NodeManipulationException {
+    private void restructureFunctionDef(T parent, T fDef, T fID, T parameters, T body)
+	    throws NodeManipulationException {
 	String functionDef = InvisibleOps.FUNCTION_DEFINITION.getTypeOfNode();
 	String functionInfo = MethodNode.FUNCTION_INFO.getTypeOfNode();
 	String functionBody = InvisibleOps.FUNCTION_BODY.getTypeOfNode();
@@ -2286,7 +2293,7 @@ public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> ext
 	    restructureRoleNodes();
 
 	    restructureIfElseIfElseOperators();
-
+	    
 	    try {
 		restructureComments(); // throws
 				       // NodeManipulationException("Could
@@ -2298,8 +2305,6 @@ public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> ext
 
 	    restructureMethods();
 
-	    System.out.println(this.toStringWithDepth());
-	    
 	    checkForParentsWithContainerChild();
 
 	    renameSpecificNodes();
