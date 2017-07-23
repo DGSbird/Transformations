@@ -29,12 +29,12 @@ public enum OpsWithFollowingOperands implements TypeOfNode, Build {
     NOT_ISNULL("not isnull", Bracket.ROUND),
     ON("on"),
     RETURNS("returns"),
-    THEN("then"),
+    THEN("then", Bracket.NONE, " ", "", " "),
     WHEN("when"),
     NOT("not"),
-    IF("if"),
-    ELSEIF("elseif"),
-    ELSE("else"),
+    IF("if", Bracket.NONE, " ", "", " "),
+    ELSEIF("elseif", Bracket.NONE, " ", "", " "),
+    ELSE("else", Bracket.NONE, " ", "", " "),
     ERRORCODE("errorcode", Bracket.ROUND),
     INPUT("input"),
     OUTPUT("output"),
@@ -58,6 +58,8 @@ public enum OpsWithFollowingOperands implements TypeOfNode, Build {
 
     String EOL = "";
 
+    String operatorChildSeparator = ", ";
+
     // ----------------------------------------------------------
     // constructor
     // ----------------------------------------------------------
@@ -67,26 +69,34 @@ public enum OpsWithFollowingOperands implements TypeOfNode, Build {
     }
 
     OpsWithFollowingOperands(String typeOfNode, Bracket bracket) {
-	this.typeOfNode = typeOfNode;
+	this(typeOfNode);
 	this.bracket = bracket;
     }
 
     OpsWithFollowingOperands(String typeOfNode, Bracket bracket, String separator) {
-	this.typeOfNode = typeOfNode;
-	this.bracket = bracket;
+	this(typeOfNode, bracket);
 	this.separator = separator;
     }
 
     OpsWithFollowingOperands(String typeOfNode, Bracket bracket, String separator, String EOL) {
-	this.typeOfNode = typeOfNode;
-	this.bracket = bracket;
-	this.separator = separator;
+	this(typeOfNode, bracket, separator);
 	this.EOL = EOL;
+    }
+
+    OpsWithFollowingOperands(String typeOfNode, Bracket bracket, String separator, String EOL,
+	    String operatorChildSeparator) {
+	this(typeOfNode, bracket, separator, EOL);
+	this.operatorChildSeparator = operatorChildSeparator;
     }
 
     // ----------------------------------------------------------
     // get methods
     // ----------------------------------------------------------
+
+    @Override
+    public String getOperatorChildrenSeparator() {
+	return operatorChildSeparator;
+    }
 
     @Override
     public String getTypeOfNode() {
