@@ -29,6 +29,7 @@ public class NodeClassification {
     // fields
     // ----------------------------------------------------------
 
+
     /**
      * A set of type of nodes that are valid in the BIRD transformation model
      */
@@ -193,6 +194,10 @@ public class NodeClassification {
 	    set.add((V) OpsWithFollowingOperands.PUT);
 	    set.add((V) OpsWithFollowingOperands.REPLACE);
 	    set.add((V) OpsWithFollowingOperands.SUBSTR);
+
+	    set.add((V) OpsWithFollowingOperands.SET_DIFF);
+	    set.add((V) OpsWithFollowingOperands.SYM_DIFF);
+	    set.add((V) OpsWithFollowingOperands.UNION);
 	    for (V v : set) {
 		nextSiblingToChildTypes.add(v.getTypeOfNode());
 	    }
