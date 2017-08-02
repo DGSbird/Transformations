@@ -5,7 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import ecb.codeBuilder.VtlBuilder;
 import ecb.exceptions.NodeManipulationException;
+import ecb.generalObjects.representation.enums.Representation;
 import ecb.generalObjects.treeStructure.abstractClasses.AbstractTree;
 import ecb.generalObjects.treeStructure.interfaces.Node;
 import ecb.generalObjects.treeStructure.interfaces.Tree;
@@ -896,17 +898,17 @@ public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> ext
 	String ifString = OpsWithFollowingOperands.IF.getTypeOfNode();
 	String elseIfString = OpsWithFollowingOperands.ELSEIF.getTypeOfNode();
 	String thenString = OpsWithFollowingOperands.THEN.getTypeOfNode();
-	
+
 	S ifType = (S) new TComponent(ifString, ifString);
 	S elseIfType = (S) new TComponent(elseIfString, elseIfString);
 	S thenType = (S) new TComponent(thenString, thenString);
-	
+
 	findAndBecomeChildOf((S) thenType, (S) ifType, true);
 	System.out.println(this.toStringWithDepth());
-	
+
 	findAndBecomeChildOf((S) thenType, (S) elseIfType, true);
 	System.out.println(this.toStringWithDepth());
-	
+
 	// set expression and type of (invisible) if-then-else node
 	String ifThenElseString = InvisibleOps.IF_THEN_ELSE.getTypeOfNode();
 	List<T> nodes = findAllByType(ifThenElseString);
@@ -2293,7 +2295,7 @@ public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> ext
 	    restructureRoleNodes();
 
 	    restructureIfElseIfElseOperators();
-	    
+
 	    try {
 		restructureComments(); // throws
 				       // NodeManipulationException("Could
@@ -2327,6 +2329,27 @@ public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> ext
     }
 
     /**
+     * Sets the code of each node of this tree using the {@link VtlBuilder}
+     * class.
+     * 
+     * @param representation
+     *            the representation that should be generated
+     */
+    private void generateCodes(Representation representation) {
+	VtlBuilder builder = new VtlBuilder();
+	int maxDistance = getMaximumDistance();
+	for (int distance = maxDistance; distance >= 0; distance--) {
+	    Set<T> nodes = getAllNodesWithDistance(distance);
+	    Iterator<T> it = nodes.iterator();
+	    while (it.hasNext()) {
+		T node = it.next();
+		builder.setTypeOfNode(node.getTypeOfNOde());
+		node.setVtlCode(builder.generateCode(node, representation));
+	    }
+	}
+    }
+
+    /**
      * Transforms this tree structure from the parse tree structure into the
      * corresponding valid tree structure reflecting the BIRD transformation
      * model
@@ -2336,11 +2359,8 @@ public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> ext
 
 	reorganiseTreeStructure();
 
-	try {
-
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
+	generateCodes(Representation.STANDARD);
+	
     }
 
 }
