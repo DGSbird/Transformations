@@ -10,8 +10,10 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -79,6 +81,7 @@ public class TNode<T extends TNode, S extends TComponent> implements Node<T, S>,
      * The (technical) identifier of this {@link TNode}
      */
     @Id
+    @GeneratedValue
     @Column(name = "nodeId", nullable = false)
     private int nodeId;
 
@@ -91,19 +94,19 @@ public class TNode<T extends TNode, S extends TComponent> implements Node<T, S>,
     /**
      * The {@link TComponent} of this {@link TNode}
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private TComponent component;
 
     /**
      * The parent of this {@link TNode}
      */
-    @ManyToOne
+    @ManyToOne(targetEntity = TNode.class)
     private T parent;
 
     /**
      * The children of this {@link TNode}
      */
-    @OneToMany
+    @OneToMany(targetEntity = TNode.class)
     private List<T> children;
 
     /**
