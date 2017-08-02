@@ -61,7 +61,7 @@ public class TContext {
     /**
      * The name of the persistence unit
      */
-    public static final String persistenceUnitName = "entityRelationshipModel";
+    public static final String persistenceUnitName = "transformations";
 
     /**
      * The {@link EntityManagerFactory} of this {@link Context}
@@ -117,7 +117,7 @@ public class TContext {
     // ----------------------------------------------------------
     // constructor
     // ----------------------------------------------------------
-
+    
     public TContext() {
 	super();
 	// scale down the information displayed on the console
@@ -134,7 +134,7 @@ public class TContext {
     // ----------------------------------------------------------
     // get / set methods
     // ----------------------------------------------------------
-
+    
     /**
      * Returns the {@link #entityManager}. In case the {@link #entityManager} is
      * null, a new {@link EntityManager} object is created and returned.
