@@ -130,7 +130,7 @@ public class VtlBuilder implements GenerateCode {
 
 	    } else if (typeOfNode instanceof OpsWithFollowingOperands) {
 		/*
-		 * structure: typeOfNode(node) 
+		 * structure: typeOfNode(node)
 		 */
 		for (int i = 0; i < node.getNumberOfChildren(); i++) {
 		    if (i == 0) {
@@ -188,8 +188,25 @@ public class VtlBuilder implements GenerateCode {
 		/*
 		 * structure: comment(node) blank expression(node)
 		 */
-		rString = (node.getComment() != null && !node.getComment().isEmpty())
-			? node.getComment() + "" + node.getExpression() : node.getExpression();
+		if (representation.equals(Representation.STANDARD)) {
+		    rString = (node.getComment() != null && !node.getComment().isEmpty())
+			    ? node.getComment() + "" + node.getExpression() : node.getExpression();
+		} else if (representation.equals(Representation.HTML)) {
+		    /*
+		     * to be considered: (1) dictionary objects need to be
+		     * linked (e.g. cubes, variables) (2) members need to be
+		     * implemented as tool tips
+		     */
+
+		    if (node.getComment() != null && !node.getComment().isEmpty()) {
+			// TODO add comment as tool tip
+		    }
+
+		    rString = (node.getComment() != null && !node.getComment().isEmpty())
+			    ? node.getComment() + "" + node.getExpression() : node.getExpression();
+		} else {
+		    // implement other types of represnetations
+		}
 	    } else if (typeOfNode instanceof MethodNode) {
 		/*
 		 * structure: alias code(child(0)) separator [ code(child(1)) ]
