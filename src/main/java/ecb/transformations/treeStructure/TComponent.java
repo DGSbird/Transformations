@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -36,6 +37,7 @@ public class TComponent extends Component implements Serializable {
      * The (technical) identifier of this {@link TComponent}
      */
     @Id
+    @GeneratedValue
     @Column(name = "componentId", nullable = false)
     private int componentId;
 
