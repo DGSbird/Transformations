@@ -904,10 +904,8 @@ public class TTree<T extends TNode<T, S> & Node<T, S>, S extends TComponent> ext
 	S thenType = (S) new TComponent(thenString, thenString);
 
 	findAndBecomeChildOf((S) thenType, (S) ifType, true);
-	System.out.println(this.toStringWithDepth());
 
 	findAndBecomeChildOf((S) thenType, (S) elseIfType, true);
-	System.out.println(this.toStringWithDepth());
 
 	// set expression and type of (invisible) if-then-else node
 	String ifThenElseString = InvisibleOps.IF_THEN_ELSE.getTypeOfNode();
