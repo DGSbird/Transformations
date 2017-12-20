@@ -1,4 +1,4 @@
-package ecb.transformations.interfaces.components;
+package ecb.technical.interfaces.components;
 
 /**
  * Interface providing {@link #isSimilar(Object)} method which can be used

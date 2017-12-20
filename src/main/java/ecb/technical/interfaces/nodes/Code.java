@@ -1,7 +1,7 @@
-package ecb.transformations.interfaces.nodes;
+package ecb.technical.interfaces.nodes;
 
-import ecb.generalObjects.languages.enums.Syntax;
-import ecb.generalObjects.representation.enums.Representation;
+import ecb.transformations.enums.Representation;
+import ecb.transformations.enums.Syntax;
 
 public interface Code {
     public String getCode(Syntax syntax, Representation representation);

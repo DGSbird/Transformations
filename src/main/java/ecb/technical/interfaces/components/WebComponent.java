@@ -1,4 +1,4 @@
-package ecb.transformations.interfaces.components;
+package ecb.technical.interfaces.components;
 
 /**
  * Extends the {@link Component} interface with methods related to the

@@ -5,8 +5,8 @@ import java.lang.String;
 
 import javax.persistence.*;
 
-import ecb.transformations.interfaces.components.Similar;
-import ecb.transformations.interfaces.components.WebComponent;
+import ecb.technical.interfaces.components.Similar;
+import ecb.technical.interfaces.components.WebComponent;
 
 /**
  * Entity implementation class for Entity: Component

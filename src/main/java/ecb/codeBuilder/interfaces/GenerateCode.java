@@ -1,7 +1,7 @@
 package ecb.codeBuilder.interfaces;
 
-import ecb.generalObjects.representation.enums.Representation;
-import ecb.transformations.interfaces.nodes.TypeOfNode;
+import ecb.technical.interfaces.nodes.TypeOfNode;
+import ecb.transformations.enums.Representation;
 import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 

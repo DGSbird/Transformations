@@ -1,4 +1,4 @@
-package ecb.transformations.interfaces.nodes;
+package ecb.technical.interfaces.nodes;
 
 import java.io.Serializable;
 

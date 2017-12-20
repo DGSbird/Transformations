@@ -1,11 +1,11 @@
 package ecb.transformations.informationModel;
 
+import ecb.technical.interfaces.components.Similar;
+import ecb.technical.interfaces.components.WebComponent;
 import ecb.transformations.enums.transformationProcess.Phase;
 import ecb.transformations.enums.transformationProcess.SchemeSubtype;
 import ecb.transformations.enums.transformationProcess.SchemeType;
 import ecb.transformations.enums.transformationProcess.Subphase;
-import ecb.transformations.interfaces.components.Similar;
-import ecb.transformations.interfaces.components.WebComponent;
 import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 import java.io.Serializable;

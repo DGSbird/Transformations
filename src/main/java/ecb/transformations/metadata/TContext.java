@@ -9,17 +9,17 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
+import ecb.technical.interfaces.nodes.TypeOfNode;
 import ecb.transformations.enums.Bracket;
+import ecb.transformations.enums.operators.DatasetOps;
+import ecb.transformations.enums.operators.InvisibleOps;
+import ecb.transformations.enums.operators.Leafs;
+import ecb.transformations.enums.operators.MethodNode;
+import ecb.transformations.enums.operators.OpsWithFollowingOperands;
+import ecb.transformations.enums.operators.OpsWithTwoOperands;
+import ecb.transformations.enums.operators.SpecialNode;
 import ecb.transformations.informationModel.TScheme;
 import ecb.transformations.informationModel.Transformation;
-import ecb.transformations.interfaces.nodes.TypeOfNode;
-import ecb.transformations.operators.enums.DatasetOps;
-import ecb.transformations.operators.enums.InvisibleOps;
-import ecb.transformations.operators.enums.Leafs;
-import ecb.transformations.operators.enums.MethodNode;
-import ecb.transformations.operators.enums.OpsWithFollowingOperands;
-import ecb.transformations.operators.enums.OpsWithTwoOperands;
-import ecb.transformations.operators.enums.SpecialNode;
 import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 

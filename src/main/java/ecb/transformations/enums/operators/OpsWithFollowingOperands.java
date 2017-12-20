@@ -1,10 +1,10 @@
-package ecb.transformations.operators.enums;
+package ecb.transformations.enums.operators;
 
-import ecb.generalObjects.languages.enums.Syntax;
-import ecb.generalObjects.representation.enums.Representation;
+import ecb.technical.interfaces.nodes.Build;
+import ecb.technical.interfaces.nodes.TypeOfNode;
 import ecb.transformations.enums.Bracket;
-import ecb.transformations.interfaces.nodes.Build;
-import ecb.transformations.interfaces.nodes.TypeOfNode;
+import ecb.transformations.enums.Representation;
+import ecb.transformations.enums.Syntax;
 import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 

@@ -1,20 +1,23 @@
-package ecb.transformations.operators.enums;
+package ecb.transformations.enums.operators;
 
-import ecb.generalObjects.languages.enums.Syntax;
-import ecb.generalObjects.representation.enums.Representation;
-import ecb.transformations.interfaces.nodes.Build;
-import ecb.transformations.interfaces.nodes.TypeOfNode;
+import ecb.technical.interfaces.nodes.Build;
+import ecb.technical.interfaces.nodes.TypeOfNode;
+import ecb.transformations.enums.Bracket;
+import ecb.transformations.enums.Representation;
+import ecb.transformations.enums.Syntax;
 import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 
-public enum MethodNode implements TypeOfNode, Build {
+public enum DatasetOps implements TypeOfNode, Build {
     // ----------------------------------------------------------
     // components
     // ----------------------------------------------------------
 
-    PROCEDURE_INFO("Procedure information", "define procedure "),
-    FUNCTION_INFO("Function information", "create function "),
-    RULESET_INFO("Ruleset information", "define datapoint ruleset ");
+    FILTER("filter", Bracket.NONE),
+    DROP("drop", Bracket.NONE),
+    KEEP("keep", Bracket.NONE),
+    RENAME("rename", Bracket.NONE),
+    CALC("calc", Bracket.NONE);
 
     // ----------------------------------------------------------
     // fields
@@ -22,15 +25,15 @@ public enum MethodNode implements TypeOfNode, Build {
 
     String typeOfNode;
 
-    String alias;
+    Bracket bracket;
 
     // ----------------------------------------------------------
     // constructor
     // ----------------------------------------------------------
 
-    MethodNode(String typeOfNode, String alias) {
+    DatasetOps(String typeOfNode, Bracket bracket) {
 	this.typeOfNode = typeOfNode;
-	this.alias = alias;
+	this.bracket = bracket;
     }
 
     // ----------------------------------------------------------
@@ -43,8 +46,8 @@ public enum MethodNode implements TypeOfNode, Build {
     }
 
     @Override
-    public String getAlias() {
-	return alias;
+    public Bracket getBracket() {
+	return bracket;
     }
 
     // ----------------------------------------------------------

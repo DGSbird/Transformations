@@ -19,16 +19,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import ecb.generalObjects.interfaces.Identifiable;
-import ecb.generalObjects.languages.enums.Syntax;
-import ecb.generalObjects.representation.enums.Representation;
-import ecb.generalObjects.treeStructure.interfaces.Node;
+import ecb.technical.interfaces.Identifiable;
+import ecb.technical.interfaces.components.Similar;
+import ecb.technical.interfaces.components.WebComponent;
+import ecb.technical.interfaces.nodes.Code;
+import ecb.technical.interfaces.nodes.TypeOfNode;
+import ecb.technical.interfaces.treeStructure.Node;
+import ecb.transformations.enums.Representation;
+import ecb.transformations.enums.Syntax;
 import ecb.transformations.functions.Functions;
-import ecb.transformations.interfaces.components.Similar;
-import ecb.transformations.interfaces.components.WebComponent;
-import ecb.transformations.interfaces.nodes.Code;
-import ecb.transformations.interfaces.nodes.TypeOfNode;
 import ecb.transformations.metadata.TContext;
+
 import javax.persistence.NamedQuery;
 import javax.persistence.NamedQueries;
 

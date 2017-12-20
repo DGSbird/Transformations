@@ -1,7 +1,7 @@
-package ecb.transformations.interfaces.nodes;
+package ecb.technical.interfaces.nodes;
 
-import ecb.generalObjects.languages.enums.Syntax;
-import ecb.generalObjects.representation.enums.Representation;
+import ecb.transformations.enums.Representation;
+import ecb.transformations.enums.Syntax;
 import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 

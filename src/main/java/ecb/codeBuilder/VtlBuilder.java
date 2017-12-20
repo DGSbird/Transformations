@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ecb.codeBuilder.interfaces.GenerateCode;
-import ecb.generalObjects.representation.enums.Representation;
+import ecb.technical.interfaces.nodes.Code;
+import ecb.technical.interfaces.nodes.TypeOfNode;
 import ecb.transformations.enums.Bracket;
-import ecb.transformations.interfaces.nodes.Code;
-import ecb.transformations.interfaces.nodes.TypeOfNode;
-import ecb.transformations.operators.enums.DatasetOps;
-import ecb.transformations.operators.enums.InvisibleOps;
-import ecb.transformations.operators.enums.Leafs;
-import ecb.transformations.operators.enums.MethodNode;
-import ecb.transformations.operators.enums.OpsWithFollowingOperands;
-import ecb.transformations.operators.enums.OpsWithTwoOperands;
-import ecb.transformations.operators.enums.SpecialNode;
+import ecb.transformations.enums.Representation;
+import ecb.transformations.enums.operators.DatasetOps;
+import ecb.transformations.enums.operators.InvisibleOps;
+import ecb.transformations.enums.operators.Leafs;
+import ecb.transformations.enums.operators.MethodNode;
+import ecb.transformations.enums.operators.OpsWithFollowingOperands;
+import ecb.transformations.enums.operators.OpsWithTwoOperands;
+import ecb.transformations.enums.operators.SpecialNode;
 import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 

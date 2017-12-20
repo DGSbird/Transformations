@@ -7,24 +7,24 @@ import java.util.Set;
 
 import ecb.codeBuilder.VtlBuilder;
 import ecb.exceptions.NodeManipulationException;
-import ecb.generalObjects.representation.enums.Representation;
-import ecb.generalObjects.treeStructure.abstractClasses.AbstractTree;
-import ecb.generalObjects.treeStructure.interfaces.Node;
-import ecb.generalObjects.treeStructure.interfaces.Tree;
+import ecb.technical.interfaces.components.Similar;
+import ecb.technical.interfaces.components.WebComponent;
+import ecb.technical.interfaces.treeStructure.Node;
+import ecb.technical.interfaces.treeStructure.Tree;
 import ecb.transformations.enums.Bracket;
+import ecb.transformations.enums.Representation;
+import ecb.transformations.enums.operators.DatasetOps;
+import ecb.transformations.enums.operators.IdentificationNode;
+import ecb.transformations.enums.operators.InvisibleOps;
+import ecb.transformations.enums.operators.Leafs;
+import ecb.transformations.enums.operators.MethodNode;
+import ecb.transformations.enums.operators.OpsWithFollowingOperands;
+import ecb.transformations.enums.operators.OpsWithTwoOperands;
+import ecb.transformations.enums.operators.SpecialNode;
 import ecb.transformations.functions.Functions;
-import ecb.transformations.interfaces.components.Similar;
-import ecb.transformations.interfaces.components.WebComponent;
 import ecb.transformations.metadata.NodeClassification;
 import ecb.transformations.metadata.TContext;
-import ecb.transformations.operators.enums.DatasetOps;
-import ecb.transformations.operators.enums.IdentificationNode;
-import ecb.transformations.operators.enums.InvisibleOps;
-import ecb.transformations.operators.enums.Leafs;
-import ecb.transformations.operators.enums.MethodNode;
-import ecb.transformations.operators.enums.OpsWithFollowingOperands;
-import ecb.transformations.operators.enums.OpsWithTwoOperands;
-import ecb.transformations.operators.enums.SpecialNode;
+import ecb.transformations.treeStructure.abstractClasses.AbstractTree;
 
 /**
  * Implementation of the {@link Tree} interface in order to provide a
