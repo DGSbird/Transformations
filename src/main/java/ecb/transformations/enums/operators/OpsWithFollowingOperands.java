@@ -24,7 +24,7 @@ public enum OpsWithFollowingOperands implements TypeOfNode, Build {
     MIN("min", Bracket.ROUND),
     MAX("max", Bracket.ROUND),
     SUM("sum", Bracket.ROUND),
-    SQRT("sqrt", Bracket.ROUND),
+    SQRT("sqrt", Bracket.ROUND, "", "", ""),
     AVG("avg", Bracket.ROUND),
     NOT_ISNULL("not isnull", Bracket.ROUND),
     ON("on"),
@@ -44,7 +44,8 @@ public enum OpsWithFollowingOperands implements TypeOfNode, Build {
     TRANSCODE("transcode", Bracket.ROUND, ", ", ""),
     PUT("put", Bracket.ROUND, ", ", " "),
     SUBSTR("substr", Bracket.ROUND, ", ", ""),
-    REPLACE("replace", Bracket.ROUND, ", ", "");
+    REPLACE("replace", Bracket.ROUND, ", ", "")
+    ;
 
     // ----------------------------------------------------------
     // fields

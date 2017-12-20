@@ -177,6 +177,9 @@ public class VtlBuilder implements GenerateCode {
 		    String expression0 = ((Code) child0).getCode(representation);
 		    String expression1 = ((Code) child1).getCode(representation);
 
+		    System.out.println("expression0 = " + expression0);
+		    System.out.println("expression1 = " + expression1);
+
 		    rString = generateCode(isJoinedSet, isGetSet, containsClauseOp, expression0, expression1,
 			    representation, typeOfNode, separator, bracket);
 
@@ -242,6 +245,11 @@ public class VtlBuilder implements GenerateCode {
 
     private String generateCode(boolean isJoinedSet, boolean isGetSet, boolean containsClauseOp, String term1,
 	    String term2, Representation representation, TypeOfNode operator, String separator, Bracket bracket) {
+
+	System.out.println("-> generateCode()");
+	System.out.println("isJoinedSet = " + isJoinedSet);
+	System.out.println("isGetSet = " + isGetSet);
+
 	String rString = "";
 
 	String symbolToFind = "";
@@ -297,8 +305,9 @@ public class VtlBuilder implements GenerateCode {
 			    + symbolToFind;
 		}
 	    } else if (!isJoinedSet && !isGetSet) {
-		rString = term1 + separator + Bracket.SQUARE.getLeft() + toString() + separator + cover(bracket, term2)
-			+ Bracket.SQUARE.getRight();
+		rString = term1 + separator + Bracket.SQUARE.getLeft() + operator.getTypeOfNode() + separator
+			+ cover(bracket, term2) + Bracket.SQUARE.getRight();
+		System.out.println("rString = " + rString);
 	    } else {
 		// throw exception: expression cannot be a joined set and a get
 		// at the same time!
