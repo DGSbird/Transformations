@@ -57,7 +57,7 @@ public enum DatasetOps implements TypeOfNode, Build {
     @Override
     public <T extends TNode<T, S>, S extends TComponent> String buildCode(T node, Syntax syntax,
 	    Representation representation) {
-	return getTypeOfNode();
+	return null;
     }
 
 }
